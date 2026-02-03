@@ -13,7 +13,10 @@ from dataclasses import dataclass
 class Config:
     """Base configuration."""
 
+    # Dessa två rader är de som efterfrågas i Step 1
     SECRET_KEY: str = os.environ.get("SECRET_KEY", "dev-secret-key")
+    SQLALCHEMY_DATABASE_URI: str = os.environ.get("DATABASE_URL", "sqlite:///news_flash.db")
+    
     DEBUG: bool = False
     TESTING: bool = False
 
