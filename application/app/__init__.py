@@ -11,8 +11,10 @@ application factory pattern. This pattern enables:
 import os
 
 from flask import Flask
+from flask_migrate import Migrate
 
 from .config import config
+from .database import db
 
 
 def create_app(config_name: str | None = None) -> Flask:
@@ -38,7 +40,11 @@ def create_app(config_name: str | None = None) -> Flask:
     # Load configuration
     app.config.from_object(config[config_name])
     
-# Register blueprints
+    # Initialize database and migrations
+    db.init_app(app)
+    Migrate(app, db)
+    
+    # Register blueprints
     from .presentation.routes.public import bp as public_bp
     app.register_blueprint(public_bp)
 
