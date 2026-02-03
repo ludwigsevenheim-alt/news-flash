@@ -44,6 +44,9 @@ def create_app(config_name: str | None = None) -> Flask:
     db.init_app(app)
     Migrate(app, db)
     
+    # Import models so they're registered with SQLAlchemy
+    from .data.models.subscriber import Subscriber
+    
     # Register blueprints
     from .presentation.routes.public import bp as public_bp
     app.register_blueprint(public_bp)
